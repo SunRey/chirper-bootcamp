@@ -5,18 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Chirp;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\View\View;
+use Inertia\Inertia;
+use Inertia\Response;
+//use Illuminate\Http\Response;
+//use Illuminate\View\View;
 
 class ChirpController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(): Response
     {
         //
-        return view('chirps.index', [
+        return Inertia::render('Chirps/Index', [
             'chirps' => Chirp::with('user')->latest()->get(),
         ]);
     }
@@ -54,11 +56,11 @@ class ChirpController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Chirp $chirp): View
+    public function edit(Chirp $chirp): Response
     {
         $this->authorize('update', $chirp);
 
-        return view('chirps.edit', [
+        return Inertia::render('chirps.edit', [
            'chirp' => $chirp,
         ]);
     }
